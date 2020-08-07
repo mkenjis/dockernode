@@ -1,10 +1,10 @@
 pipeline {
     agent none
     stages {
-        agent {
-           docker { image 'node:14-alpine' }
-        }
         stage('Test') {
+            agent {
+               docker { image 'node:14-alpine' }
+            }
             steps {
                 sh 'node --version'
             }
