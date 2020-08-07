@@ -1,5 +1,5 @@
 pipeline {
-    agent { dockerfile true }
+    agent { label 'my_node_label' docker 'mkenjis/mynode_img' }
     stages {
         stage('Test') {
             steps {
