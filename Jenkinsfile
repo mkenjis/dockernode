@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
     environment {
         GIT_BRANCH_NAME = "branch1"
     }
