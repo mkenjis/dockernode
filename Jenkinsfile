@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        GIT_BRANCH_NAME = "branch1"
+        GIT_BRANCH_NAME = "branch2"
     }
     stages {
         stage('Test') {
