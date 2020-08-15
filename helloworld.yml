@@ -1,0 +1,67 @@
+---
+- hosts: "{{ target | default('localhost') }}"
+  become: yes
+
+  vars:
+    branch_name: "{{ version }}"
+
+  tasks:
+
+# tasks file for nodejs
+#  - name: Installing node and npm
+#    apt:
+#      name: "{{ item }}"
+#      state: latest
+#    with_items:
+#      - nodejs
+#      - npm
+
+# tasks file for helloworld
+#  - name: Copying the application file
+#    copy:
+#      src: helloworld.js
+#      dest: /home/ec2-user/
+#      owner: ec2-user
+#      group: ec2-user
+#      mode: 0644
+#    notify: restart helloworld
+
+#  - name: Copying the upstart file
+#    copy:
+#      src: helloworld.service
+#      dest: /etc/systemd/system/helloworld.service
+#      owner: root
+#      group: root
+#      mode: 0644
+
+  - name: Checkout Git
+    git:
+      repo: 'https://github.com/mkenjis/dockerprod.git'
+      dest: /home/ec2-user/dockerprod
+      version: "{{ branch_name }}"
+    notify:
+      - compose down
+      - rebuild
+      - compose up
+
+#  - name: Starting the HelloWorld node service
+#    service:
+#      name: helloworld
+#      state: started
+
+# handlers file for helloworld
+  handlers:
+  - name: compose down
+    command: docker-compose down
+    args:
+      chdir: /home/ec2-user/dockerprod
+
+  - name: rebuild
+    command: docker image build -t mynode_img .
+    args:
+      chdir: /home/ec2-user/dockerprod
+      
+  - name: compose up
+    command: docker-compose up -d
+    args:
+      chdir: /home/ec2-user/dockerprod
