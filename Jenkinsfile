@@ -12,6 +12,7 @@ pipeline {
             }
         }
 		stage('Deploy') {
+		    agent none
             steps {
                 sh 'echo $PATH'
 		        sh 'echo $GIT_BRANCH_NAME >/tmp/branch_name.tmp'
