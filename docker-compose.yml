@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  pyapp:
+    image: mynode_img:latest
+    build: .
+    ports:
+      - '3000:3000'
