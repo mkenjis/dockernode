@@ -36,8 +36,8 @@
 
   - name: Checkout Git
     git:
-      repo: 'https://github.com/mkenjis/dockerprod.git'
-      dest: /home/ec2-user/dockerprod
+      repo: 'https://github.com/mkenjis/dockernode.git'
+      dest: /home/ec2-user/dockernode
       version: "{{ branch_name }}"
     notify:
       - compose down
@@ -54,14 +54,14 @@
   - name: compose down
     command: docker-compose down
     args:
-      chdir: /home/ec2-user/dockerprod
+      chdir: /home/ec2-user/dockernode
 
   - name: rebuild
     command: docker image build -t mynode_img .
     args:
-      chdir: /home/ec2-user/dockerprod
+      chdir: /home/ec2-user/dockernode
       
   - name: compose up
     command: docker-compose up -d
     args:
-      chdir: /home/ec2-user/dockerprod
+      chdir: /home/ec2-user/dockernode
